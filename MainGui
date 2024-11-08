@@ -1,0 +1,86 @@
+local function createAutoActionsGUI(player)
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "AutoActionsGUI"
+    ScreenGui.Parent = playerGui
+
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 300, 0, 200)
+    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    MainFrame.Parent = ScreenGui
+
+    -- Add corner radius to MainFrame (Auto Actions GUI container)
+    local cornerMainFrame = Instance.new("UICorner")
+    cornerMainFrame.CornerRadius = UDim.new(0, 10)  -- Adjust the radius size here
+    cornerMainFrame.Parent = MainFrame
+
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(1, 0, 0, 30)
+    Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- black
+    Title.BackgroundTransparency = 1
+    Title.Text = "Autofarm [By Berun]"
+    Title.TextColor3 = Color3.fromRGB(55, 255, 255) -- White text
+    Title.Font = Enum.Font.SourceSans
+    Title.TextSize = 18
+    Title.BorderSizePixel = 0
+    Title.Parent = MainFrame
+
+    -- Create the Minimize and Terminate container
+    local ButtonContainer = Instance.new("Frame")
+    ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
+    ButtonContainer.Position = UDim2.new(0, 0, 0, 0)
+    ButtonContainer.BackgroundTransparency = 1
+    ButtonContainer.Parent = MainFrame
+
+    -- Add corner radius to ButtonContainer
+    local cornerButtonContainer = Instance.new("UICorner")
+    cornerButtonContainer.CornerRadius = UDim.new(0, 10)  -- Adjust the radius size here
+    cornerButtonContainer.Parent = ButtonContainer
+
+    -- Create the Minimize button
+    local MinimizeButton = Instance.new("TextButton")
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+    MinimizeButton.Text = "-"
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    MinimizeButton.BackgroundTransparency = 1
+    MinimizeButton.Font = Enum.Font.SourceSans
+    MinimizeButton.TextSize = 16
+    MinimizeButton.Parent = ButtonContainer
+
+    -- Create the Terminate button
+    local TerminateButton = Instance.new("TextButton")
+    TerminateButton.Size = UDim2.new(0, 30, 0, 30)
+    TerminateButton.Position = UDim2.new(1, -30, 0, 0)
+    TerminateButton.Text = "X"
+    TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    TerminateButton.BackgroundTransparency = 1
+    TerminateButton.Font = Enum.Font.SourceSans
+    TerminateButton.TextSize = 16
+    TerminateButton.Parent = ButtonContainer
+
+    -- Minimize button functionality
+    MinimizeButton.MouseButton1Click:Connect(function()
+        if MainFrame.Size == UDim2.new(0, 300, 0, 30) then
+            MainFrame.Size = UDim2.new(0, 300, 0, 200)
+        else
+            MainFrame.Size = UDim2.new(0, 300, 0, 30)
+        end
+    end)
+
+    -- Terminate button functionality
+    TerminateButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+
+    return MainFrame
+end
+
+return createAutoActionsGUI
