@@ -1,86 +1,83 @@
-local function createAutoActionsGUI(player)
-    local playerGui = player:WaitForChild("PlayerGui")
+-- Create the Terminate button
+local TerminateButton = Instance.new("TextButton")
+TerminateButton.Size = UDim2.new(0, 30, 0, 30)
+TerminateButton.Position = UDim2.new(1, -30, 0, 0)
+TerminateButton.Text = "X"
+TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+TerminateButton.BackgroundTransparency = 1
+TerminateButton.Font = Enum.Font.SourceSans
+TerminateButton.TextSize = 16
+TerminateButton.Parent = ButtonContainer
 
-    local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "AutoActionsGUI"
-    ScreenGui.Parent = playerGui
+-- Minimize button functionality
+MinimizeButton.MouseButton1Click:Connect(function()
+    if MainFrame.Size == UDim2.new(0, 300, 0, 30) then
+        MainFrame.Size = UDim2.new(0, 300, 0, 200)
+        ScrollingFrame.Visible = true
+    else
+        MainFrame.Size = UDim2.new(0, 300, 0, 30)
+        ScrollingFrame.Visible = false
+    end
+end)
 
-    local MainFrame = Instance.new("Frame")
-    MainFrame.Size = UDim2.new(0, 300, 0, 200)
-    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
-    MainFrame.BorderSizePixel = 0
-    MainFrame.Active = true
-    MainFrame.Draggable = true
-    MainFrame.Parent = ScreenGui
+-- Terminate button functionality
+TerminateButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
 
-    -- Add corner radius to MainFrame (Auto Actions GUI container)
-    local cornerMainFrame = Instance.new("UICorner")
-    cornerMainFrame.CornerRadius = UDim.new(0, 10)  -- Adjust the radius size here
-    cornerMainFrame.Parent = MainFrame
+-- Scrolling Frame for Toggles
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
+ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
+ScrollingFrame.BackgroundTransparency = 1
+ScrollingFrame.ScrollBarThickness = 8
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+ScrollingFrame.Parent = MainFrame
 
-    local Title = Instance.new("TextLabel")
-    Title.Size = UDim2.new(1, 0, 0, 30)
-    Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- black
-    Title.BackgroundTransparency = 1
-    Title.Text = "Autofarm [By Berun]"
-    Title.TextColor3 = Color3.fromRGB(55, 255, 255) -- White text
-    Title.Font = Enum.Font.SourceSans
-    Title.TextSize = 18
-    Title.BorderSizePixel = 0
-    Title.Parent = MainFrame
+-- Add corner radius to the ScrollingFrame as well
+local cornerScrollingFrame = Instance.new("UICorner")
+cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
+cornerScrollingFrame.Parent = ScrollingFrame
 
-    -- Create the Minimize and Terminate container
-    local ButtonContainer = Instance.new("Frame")
-    ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
-    ButtonContainer.Position = UDim2.new(0, 0, 0, 0)
-    ButtonContainer.BackgroundTransparency = 1
-    ButtonContainer.Parent = MainFrame
+local toggleYOffset = 0
 
-    -- Add corner radius to ButtonContainer
-    local cornerButtonContainer = Instance.new("UICorner")
-    cornerButtonContainer.CornerRadius = UDim.new(0, 10)  -- Adjust the radius size here
-    cornerButtonContainer.Parent = ButtonContainer
+-- Function to create individual checkable toggles
+local function createToggle(parent, actionName, actionFunc)
+    local ToggleFrame = Instance.new("Frame")
+    ToggleFrame.Size = UDim2.new(1, -20, 0, 30)
+    ToggleFrame.Position = UDim2.new(0, 10, 0, toggleYOffset)
+    ToggleFrame.BackgroundTransparency = 1
+    ToggleFrame.Parent = parent
 
-    -- Create the Minimize button
-    local MinimizeButton = Instance.new("TextButton")
-    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
-    MinimizeButton.Text = "-"
-    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
-    MinimizeButton.BackgroundTransparency = 1
-    MinimizeButton.Font = Enum.Font.SourceSans
-    MinimizeButton.TextSize = 16
-    MinimizeButton.Parent = ButtonContainer
+    local ToggleText = Instance.new("TextLabel")
+    ToggleText.Size = UDim2.new(0.7, 0, 1, 0)
+    ToggleText.BackgroundTransparency = 1
+    ToggleText.Text = actionName
+    ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text for contrast
+    ToggleText.Font = Enum.Font.SourceSans
+    ToggleText.TextSize = 16
+    ToggleText.Parent = ToggleFrame
 
-    -- Create the Terminate button
-    local TerminateButton = Instance.new("TextButton")
-    TerminateButton.Size = UDim2.new(0, 30, 0, 30)
-    TerminateButton.Position = UDim2.new(1, -30, 0, 0)
-    TerminateButton.Text = "X"
-    TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
-    TerminateButton.BackgroundTransparency = 1
-    TerminateButton.Font = Enum.Font.SourceSans
-    TerminateButton.TextSize = 16
-    TerminateButton.Parent = ButtonContainer
+    local ToggleCheckbox = Instance.new("TextButton")
+    ToggleCheckbox.Size = UDim2.new(0.3, 0, 1, 0)
+    ToggleCheckbox.Position = UDim2.new(0.7, 0, 0, 0)
+    ToggleCheckbox.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    ToggleCheckbox.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text for "checked"
+    ToggleCheckbox.Text = "[ ]"
+    ToggleCheckbox.Font = Enum.Font.SourceSans
+    ToggleCheckbox.TextSize = 16
+    ToggleCheckbox.BorderSizePixel = 0 -- Remove the border line
+    ToggleCheckbox.Parent = ToggleFrame
 
-    -- Minimize button functionality
-    MinimizeButton.MouseButton1Click:Connect(function()
-        if MainFrame.Size == UDim2.new(0, 300, 0, 30) then
-            MainFrame.Size = UDim2.new(0, 300, 0, 200)
-        else
-            MainFrame.Size = UDim2.new(0, 300, 0, 30)
+    local isChecked = false
+    ToggleCheckbox.MouseButton1Click:Connect(function()
+        isChecked = not isChecked
+        ToggleCheckbox.Text = isChecked and "[X]" or "[ ]"
+        while isChecked and task.wait() do
+            actionFunc()
         end
     end)
 
-    -- Terminate button functionality
-    TerminateButton.MouseButton1Click:Connect(function()
-        ScreenGui:Destroy()
-    end)
-
-    return MainFrame
+    toggleYOffset = toggleYOffset + 35
 end
-
-return createAutoActionsGUI
