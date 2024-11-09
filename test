@@ -24,7 +24,7 @@ local function createAutoActionsGUI(player, titleText)
     Title.BackgroundTransparency = 1
     Title.Text = titleText or "Autofarm [By Berun]"  -- Default to previous title if no title is provided
     Title.TextColor3 = Color3.fromRGB(55, 255, 255)
-    Title.Font = Enum.Font.Cartoon
+    Title.Font = Enum.Font.Bangers
     Title.TextSize = 18
     Title.Parent = MainFrame
 
@@ -41,7 +41,7 @@ local function createAutoActionsGUI(player, titleText)
     MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     MinimizeButton.BackgroundTransparency = 1
-    MinimizeButton.Font = Enum.Font.SourceSans
+    MinimizeButton.Font = Enum.Font.Bangers
     MinimizeButton.TextSize = 16
     MinimizeButton.Parent = ButtonContainer
 
@@ -52,7 +52,7 @@ local function createAutoActionsGUI(player, titleText)
     TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     TerminateButton.BackgroundTransparency = 1
-    TerminateButton.Font = Enum.Font.SourceSans
+    TerminateButton.Font = Enum.Font.Bangers
     TerminateButton.TextSize = 16
     TerminateButton.Parent = ButtonContainer
 
