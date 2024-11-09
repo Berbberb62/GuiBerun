@@ -1,115 +1,75 @@
--- This file contains the GUI template and is designed to be loaded using loadstring().
+-- GUI_Template.lua (Save this script and host it online for loadstring)
+local function createAutoActionsGUI(player)
+    local playerGui = player:WaitForChild("PlayerGui")
 
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "AutoActionsGUI"
+    ScreenGui.Parent = playerGui
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AutoActionsGUI"
-ScreenGui.Parent = playerGui
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- Default size, modifiable in the main function file
+    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    MainFrame.Parent = ScreenGui
 
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- Initial size, can be changed externally
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
-MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Set to black
-MainFrame.BorderSizePixel = 0
-MainFrame.Active = true
-MainFrame.Draggable = true
-MainFrame.Parent = ScreenGui
+    local cornerMainFrame = Instance.new("UICorner")
+    cornerMainFrame.CornerRadius = UDim.new(0, 10)
+    cornerMainFrame.Parent = MainFrame
 
-local cornerMainFrame = Instance.new("UICorner")
-cornerMainFrame.CornerRadius = UDim.new(0, 10)
-cornerMainFrame.Parent = MainFrame
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(1, 0, 0, 30)
+    Title.BackgroundTransparency = 1
+    Title.Text = "Autofarm [By Berun]"
+    Title.TextColor3 = Color3.fromRGB(55, 255, 255)
+    Title.Font = Enum.Font.SourceSans
+    Title.TextSize = 18
+    Title.Parent = MainFrame
 
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.BackgroundTransparency = 1
-Title.Text = "Autofarm [By Berun]"
-Title.TextColor3 = Color3.fromRGB(55, 255, 255)
-Title.Font = Enum.Font.SourceSans
-Title.TextSize = 18
-Title.BorderSizePixel = 0
-Title.Parent = MainFrame
+    local ButtonContainer = Instance.new("Frame")
+    ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
+    ButtonContainer.BackgroundTransparency = 1
+    ButtonContainer.Parent = MainFrame
 
-local ButtonContainer = Instance.new("Frame")
-ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
-ButtonContainer.Position = UDim2.new(0, 0, 0, 0)
-ButtonContainer.BackgroundTransparency = 1
-ButtonContainer.Parent = MainFrame
+    -- Minimize and Terminate Buttons
+    local MinimizeButton = Instance.new("TextButton")
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+    MinimizeButton.Text = "-"
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    MinimizeButton.BackgroundTransparency = 1
+    MinimizeButton.Font = Enum.Font.SourceSans
+    MinimizeButton.TextSize = 16
+    MinimizeButton.Parent = ButtonContainer
 
-local cornerButtonContainer = Instance.new("UICorner")
-cornerButtonContainer.CornerRadius = UDim.new(0, 10)
-cornerButtonContainer.Parent = ButtonContainer
+    local TerminateButton = Instance.new("TextButton")
+    TerminateButton.Size = UDim2.new(0, 30, 0, 30)
+    TerminateButton.Position = UDim2.new(1, -30, 0, 0)
+    TerminateButton.Text = "X"
+    TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    TerminateButton.BackgroundTransparency = 1
+    TerminateButton.Font = Enum.Font.SourceSans
+    TerminateButton.TextSize = 16
+    TerminateButton.Parent = ButtonContainer
 
-local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
-MinimizeButton.Text = "-"
-MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-MinimizeButton.BackgroundTransparency = 1
-MinimizeButton.Font = Enum.Font.SourceSans
-MinimizeButton.TextSize = 16
-MinimizeButton.Parent = ButtonContainer
+    -- Scrolling Frame for toggles
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
+    ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
+    ScrollingFrame.BackgroundTransparency = 1
+    ScrollingFrame.ScrollBarThickness = 8
+    ScrollingFrame.Parent = MainFrame
 
-local TerminateButton = Instance.new("TextButton")
-TerminateButton.Size = UDim2.new(0, 30, 0, 30)
-TerminateButton.Position = UDim2.new(1, -30, 0, 0)
-TerminateButton.Text = "X"
-TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-TerminateButton.BackgroundTransparency = 1
-TerminateButton.Font = Enum.Font.SourceSans
-TerminateButton.TextSize = 16
-TerminateButton.Parent = ButtonContainer
+    local cornerScrollingFrame = Instance.new("UICorner")
+    cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
+    cornerScrollingFrame.Parent = ScrollingFrame
 
-local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
-ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
-ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.ScrollBarThickness = 8
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollingFrame.Parent = MainFrame
-
-local cornerScrollingFrame = Instance.new("UICorner")
-cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
-cornerScrollingFrame.Parent = ScrollingFrame
-
-local function createToggle(parent, actionName, actionFunc)
-    local toggleYOffset = #parent:GetChildren() * 35
-    local ToggleFrame = Instance.new("Frame")
-    ToggleFrame.Size = UDim2.new(1, -20, 0, 30)
-    ToggleFrame.Position = UDim2.new(0, 10, 0, toggleYOffset)
-    ToggleFrame.BackgroundTransparency = 1
-    ToggleFrame.Parent = parent
-
-    local ToggleText = Instance.new("TextLabel")
-    ToggleText.Size = UDim2.new(0.7, 0, 1, 0)
-    ToggleText.BackgroundTransparency = 1
-    ToggleText.Text = actionName
-    ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleText.Font = Enum.Font.SourceSans
-    ToggleText.TextSize = 16
-    ToggleText.Parent = ToggleFrame
-
-    local ToggleCheckbox = Instance.new("TextButton")
-    ToggleCheckbox.Size = UDim2.new(0.3, 0, 1, 0)
-    ToggleCheckbox.Position = UDim2.new(0.7, 0, 0, 0)
-    ToggleCheckbox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    ToggleCheckbox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleCheckbox.Text = "[ ]"
-    ToggleCheckbox.Font = Enum.Font.SourceSans
-    ToggleCheckbox.TextSize = 16
-    ToggleCheckbox.BorderSizePixel = 0
-    ToggleCheckbox.Parent = ToggleFrame
-
-    local isChecked = false
-    ToggleCheckbox.MouseButton1Click:Connect(function()
-        isChecked = not isChecked
-        ToggleCheckbox.Text = isChecked and "[X]" or "[ ]"
-        while isChecked and task.wait() do
-            actionFunc()
-        end
-    end)
+    -- Return GUI elements
+    return ScreenGui, MainFrame, ScrollingFrame, MinimizeButton, TerminateButton
 end
 
-return MainFrame, createToggle
+return createAutoActionsGUI
