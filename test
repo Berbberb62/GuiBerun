@@ -1,0 +1,66 @@
+-- GUI_Template.lua (Save this script and host it online for loadstring)
+local function createAutoActionsGUI(player)
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "By"
+    ScreenGui.Parent = playerGui
+
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- Default size, modifiable in the main function file
+    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    MainFrame.Parent = ScreenGui
+
+    local cornerMainFrame = Instance.new("UICorner")
+    cornerMainFrame.CornerRadius = UDim.new(0, 10)
+    cornerMainFrame.Parent = MainFrame
+
+    local ButtonContainer = Instance.new("Frame")
+    ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
+    ButtonContainer.BackgroundTransparency = 1
+    ButtonContainer.Parent = MainFrame
+
+    -- Minimize and Terminate Buttons
+    local MinimizeButton = Instance.new("TextButton")
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+    MinimizeButton.Text = "-"
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    MinimizeButton.BackgroundTransparency = 1
+    MinimizeButton.Font = Enum.Font.SourceSans
+    MinimizeButton.TextSize = 16
+    MinimizeButton.Parent = ButtonContainer
+
+    local TerminateButton = Instance.new("TextButton")
+    TerminateButton.Size = UDim2.new(0, 30, 0, 30)
+    TerminateButton.Position = UDim2.new(1, -30, 0, 0)
+    TerminateButton.Text = "X"
+    TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TerminateButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    TerminateButton.BackgroundTransparency = 1
+    TerminateButton.Font = Enum.Font.SourceSans
+    TerminateButton.TextSize = 16
+    TerminateButton.Parent = ButtonContainer
+
+    -- Scrolling Frame for toggles
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
+    ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
+    ScrollingFrame.BackgroundTransparency = 1
+    ScrollingFrame.ScrollBarThickness = 8
+    ScrollingFrame.Parent = MainFrame
+
+    local cornerScrollingFrame = Instance.new("UICorner")
+    cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
+    cornerScrollingFrame.Parent = ScrollingFrame
+
+    -- Return GUI elements
+    return ScreenGui, MainFrame, ScrollingFrame, MinimizeButton, TerminateButton
+end
+
+return createAutoActionsGUI  
