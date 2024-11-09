@@ -7,20 +7,18 @@ local function createAutoActionsGUI(player)
     ScreenGui.Parent = playerGui
 
     local MainFrame = Instance.new("Frame")
-    MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- You can modify this in the function call
+    MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- This size can be modified in the main function file
     MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     MainFrame.BorderSizePixel = 0
     MainFrame.Active = true
     MainFrame.Draggable = true
     MainFrame.Parent = ScreenGui
 
-    -- Add corner radius to MainFrame
     local cornerMainFrame = Instance.new("UICorner")
     cornerMainFrame.CornerRadius = UDim.new(0, 10)
     cornerMainFrame.Parent = MainFrame
 
-    -- Title creation
     local Title = Instance.new("TextLabel")
     Title.Size = UDim2.new(1, 0, 0, 30)
     Title.BackgroundTransparency = 1
@@ -30,7 +28,6 @@ local function createAutoActionsGUI(player)
     Title.TextSize = 18
     Title.Parent = MainFrame
 
-    -- Create the button container
     local ButtonContainer = Instance.new("Frame")
     ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
     ButtonContainer.BackgroundTransparency = 1
@@ -40,10 +37,8 @@ local function createAutoActionsGUI(player)
     cornerButtonContainer.CornerRadius = UDim.new(0, 10)
     cornerButtonContainer.Parent = ButtonContainer
 
-    -- Minimize and terminate buttons
-    -- [Add button creation code here]
+    -- Minimize and Terminate buttons setup goes here
 
-    -- Scrolling frame creation
     local ScrollingFrame = Instance.new("ScrollingFrame")
     ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
     ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
