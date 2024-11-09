@@ -1,93 +1,61 @@
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+-- GUI_Template.lua (Save this script and host it online for loadstring)
+local function createAutoActionsGUI(player)
+    local playerGui = player:WaitForChild("PlayerGui")
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AutoActionsGUI"
-ScreenGui.Parent = playerGui
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "AutoActionsGUI"
+    ScreenGui.Parent = playerGui
 
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 200)
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
-MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-MainFrame.BorderSizePixel = 0
-MainFrame.Active = true
-MainFrame.Draggable = true
-MainFrame.Parent = ScreenGui
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 300, 0, 200)  -- You can modify this in the function call
+    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Set to black
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    MainFrame.Parent = ScreenGui
 
--- Add corner radius to MainFrame
-local cornerMainFrame = Instance.new("UICorner")
-cornerMainFrame.CornerRadius = UDim.new(0, 10)
-cornerMainFrame.Parent = MainFrame
+    -- Add corner radius to MainFrame
+    local cornerMainFrame = Instance.new("UICorner")
+    cornerMainFrame.CornerRadius = UDim.new(0, 10)
+    cornerMainFrame.Parent = MainFrame
 
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.BackgroundTransparency = 1
-Title.Text = "Autofarm [By Berun]"
-Title.TextColor3 = Color3.fromRGB(55, 255, 255)
-Title.Font = Enum.Font.SourceSans
-Title.TextSize = 18
-Title.BorderSizePixel = 0
-Title.Parent = MainFrame
+    -- Title creation
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(1, 0, 0, 30)
+    Title.BackgroundTransparency = 1
+    Title.Text = "Autofarm [By Berun]"
+    Title.TextColor3 = Color3.fromRGB(55, 255, 255)
+    Title.Font = Enum.Font.SourceSans
+    Title.TextSize = 18
+    Title.Parent = MainFrame
 
--- Create the Minimize and Terminate container
-local ButtonContainer = Instance.new("Frame")
-ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
-ButtonContainer.Position = UDim2.new(0, 0, 0, 0)
-ButtonContainer.BackgroundTransparency = 1
-ButtonContainer.Parent = MainFrame
+    -- Create the button container
+    local ButtonContainer = Instance.new("Frame")
+    ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
+    ButtonContainer.BackgroundTransparency = 1
+    ButtonContainer.Parent = MainFrame
 
-local cornerButtonContainer = Instance.new("UICorner")
-cornerButtonContainer.CornerRadius = UDim.new(0, 10)
-cornerButtonContainer.Parent = ButtonContainer
+    local cornerButtonContainer = Instance.new("UICorner")
+    cornerButtonContainer.CornerRadius = UDim.new(0, 10)
+    cornerButtonContainer.Parent = ButtonContainer
 
-local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
-MinimizeButton.Text = "-"
-MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.BackgroundTransparency = 1
-MinimizeButton.Font = Enum.Font.SourceSans
-MinimizeButton.TextSize = 16
-MinimizeButton.Parent = ButtonContainer
+    -- Minimize and terminate buttons
+    -- [Add button creation code here]
 
-local TerminateButton = Instance.new("TextButton")
-TerminateButton.Size = UDim2.new(0, 30, 0, 30)
-TerminateButton.Position = UDim2.new(1, -30, 0, 0)
-TerminateButton.Text = "X"
-TerminateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-TerminateButton.BackgroundTransparency = 1
-TerminateButton.Font = Enum.Font.SourceSans
-TerminateButton.TextSize = 16
-TerminateButton.Parent = ButtonContainer
+    -- Scrolling frame creation
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
+    ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
+    ScrollingFrame.BackgroundTransparency = 1
+    ScrollingFrame.ScrollBarThickness = 8
+    ScrollingFrame.Parent = MainFrame
 
--- Minimize button functionality
-MinimizeButton.MouseButton1Click:Connect(function()
-    if MainFrame.Size == UDim2.new(0, 300, 0, 30) then
-        MainFrame.Size = UDim2.new(0, 300, 0, 200)
-        ScrollingFrame.Visible = true
-    else
-        MainFrame.Size = UDim2.new(0, 300, 0, 30)
-        ScrollingFrame.Visible = false
-    end
-end)
+    local cornerScrollingFrame = Instance.new("UICorner")
+    cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
+    cornerScrollingFrame.Parent = ScrollingFrame
 
--- Terminate button functionality
-TerminateButton.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
+    return ScreenGui, MainFrame, ScrollingFrame
+end
 
--- Scrolling Frame for Toggles
-local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
-ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
-ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.ScrollBarThickness = 8
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollingFrame.Parent = MainFrame
-
--- Add corner radius to the ScrollingFrame
-local cornerScrollingFrame = Instance.new("UICorner")
-cornerScrollingFrame.CornerRadius = UDim.new(0, 10)
-cornerScrollingFrame.Parent = ScrollingFrame
-
-return ScrollingFrame
+return createAutoActionsGUI
