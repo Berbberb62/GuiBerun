@@ -1,9 +1,9 @@
--- GUI_Template.lua (Save this script and host it online for loadstring)
-local function createAutoActionsGUI(player)
+-- GUI_Template.lua (Hosted on GitHub)
+local function createAutoActionsGUI(player, titleText)
     local playerGui = player:WaitForChild("PlayerGui")
 
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "By"
+    ScreenGui.Name = "AutoActionsGUI"
     ScreenGui.Parent = playerGui
 
     local MainFrame = Instance.new("Frame")
@@ -18,6 +18,15 @@ local function createAutoActionsGUI(player)
     local cornerMainFrame = Instance.new("UICorner")
     cornerMainFrame.CornerRadius = UDim.new(0, 10)
     cornerMainFrame.Parent = MainFrame
+
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(1, 0, 0, 30)
+    Title.BackgroundTransparency = 1
+    Title.Text = titleText or "Autofarm [By Berun]"  -- Default to previous title if no title is provided
+    Title.TextColor3 = Color3.fromRGB(55, 255, 255)
+    Title.Font = Enum.Font.SourceSans
+    Title.TextSize = 18
+    Title.Parent = MainFrame
 
     local ButtonContainer = Instance.new("Frame")
     ButtonContainer.Size = UDim2.new(1, 0, 0, 30)
@@ -63,4 +72,4 @@ local function createAutoActionsGUI(player)
     return ScreenGui, MainFrame, ScrollingFrame, MinimizeButton, TerminateButton
 end
 
-return createAutoActionsGUI  
+return createAutoActionsGUI
